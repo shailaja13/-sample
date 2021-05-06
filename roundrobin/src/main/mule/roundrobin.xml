@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="7c6321da-8d72-4c96-af7f-de14ef533054" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="roundrobinFlow" doc:id="c9c94c36-632d-41cd-82d9-9276b51b975a" >
+		<http:listener doc:name="Listener" doc:id="3f87602a-23ac-44cd-ba51-4bcbba323bc8" config-ref="HTTP_Listener_config" path="/round"/>
+		<logger level="INFO" doc:name="Logger" doc:id="82b271f7-d414-41dc-9fd5-5f2b8b0001c0" message="#[payload]"/>
+		<set-variable value='#[[[&#10;{&#10;	"name":"mule1"&#10;},&#10;{&#10;	"name":"mule2"&#10;}],&#10;&#10;[[&#10;{&#10;	"name":"mule3"&#10;},&#10;&#10;{&#10;	"name":"mule4"&#10;}	&#10;]],&#10;[[&#10;{&#10;	"name":"mule5"&#10;},&#10;{&#10;	"name":"mule6"&#10;}	&#10;]]]]' doc:name="Set Variable" doc:id="9e265da8-bddc-42d4-97f0-614e2d1f7692" variableName="round"/>
+		<set-variable value='#[[[&#10;{&#10;	"name":"mule11"&#10;},&#10;{&#10;	"name":"mule22"&#10;}],&#10;&#10;[[&#10;{&#10;	"name":"mule33"&#10;},&#10;&#10;{&#10;	"name":"mule44"&#10;}	&#10;]],&#10;[[&#10;{&#10;	"name":"mule55"&#10;},&#10;{&#10;	"name":"mule66"&#10;}	&#10;]]]]' doc:name="Set Variable" doc:id="1b623841-0e38-468d-89ed-1fa3f972449e" variableName="round2"/>
+		<set-variable value='#[[[&#10;{&#10;	"name":"mule111"&#10;},&#10;{&#10;	"name":"mule222"&#10;}],&#10;&#10;[[&#10;{&#10;	"name":"mule333"&#10;},&#10;&#10;{&#10;	"name":"mule444"&#10;}	&#10;]],&#10;[[&#10;{&#10;	"name":"mule555"&#10;},&#10;{&#10;	"name":"mule6"&#10;}	&#10;]]]]' doc:name="Set Variable" doc:id="f52fd8c0-32ac-4eb9-a5bd-e14b0a88dcc7" variableName="roumd3"/>
+		<round-robin doc:name="Round Robin" doc:id="2ad82f1a-9f08-4b1e-a228-36780f82981a" >
+			<route >
+				<logger level="INFO" doc:name="Logger" doc:id="e129ca1c-d84d-4525-b20d-b5147b6e548d" message="log1===="/>
+				<set-payload value="#[vars.round]" doc:name="Set Payload" doc:id="7c6e564a-e9e8-42a5-9ddc-ef3dad44e24a" />
+				<logger level="INFO" doc:name="Logger" doc:id="a13b66d0-a158-4314-b267-c2baa1b88c24" message="#[payload]" />
+			</route>
+			<route >
+				<logger level="INFO" doc:name="Logger" doc:id="ff620fef-974b-41d8-b182-ae73493cad3c" message="log2===="/>
+				<set-payload value="#[vars.round2]" doc:name="Set Payload" doc:id="02195c9d-4ab7-4dcb-b0c3-bcfb63de6755" />
+				<logger level="INFO" doc:name="Logger" doc:id="d034505d-bb6e-4995-8dc9-127aa8965369" message="#[payload]"/>
+			</route>
+			<route >
+				<logger level="INFO" doc:name="Logger" doc:id="6b0a3681-047b-48fa-bcfd-16578188740a" message="log3====="/>
+				<set-payload value='#[vars.roumd3]' doc:name="Set Payload" doc:id="f8d903c4-586d-4187-b04f-3e198ed2a7d6" />
+				<logger level="INFO" doc:name="Logger" doc:id="e64932ab-53ad-4471-9399-bfd4ba8576f2" message="#[payload]"/>
+			</route>
+		</round-robin>
+	</flow>
+</mule>
