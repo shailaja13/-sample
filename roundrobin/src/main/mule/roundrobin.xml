@@ -29,6 +29,9 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 				<set-payload value='#[vars.roumd3]' doc:name="Set Payload" doc:id="f8d903c4-586d-4187-b04f-3e198ed2a7d6" />
 				<logger level="INFO" doc:name="Logger" doc:id="e64932ab-53ad-4471-9399-bfd4ba8576f2" message="#[payload]"/>
 			</route>
+			<route >
+				<logger level="INFO" doc:name="Logger" doc:id="895fcf02-b344-4b0e-a673-4838a41b8505" message="#[payload]"/>
+			</route>
 		</round-robin>
 	</flow>
 </mule>
